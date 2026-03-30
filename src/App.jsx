@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import MovieCard from './Components/MovieCard.jsx'
 import Home from './Pages/Home.jsx'
 import {Routes,Route} from 'react-router-dom'
@@ -22,7 +19,6 @@ function App() {
 
 </Routes>
       
-   <Home/>
     </main>
     </div>
   )
