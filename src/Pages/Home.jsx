@@ -2,19 +2,26 @@ import React from 'react'
 import MovieCard from '../Components/MovieCard';
 import { useState, useEffect } from 'react';
 import '../css/home.css';
-import { SearchMovies, getPopularMovies } from '../services/api';
+import { SearchMovies, getPopularMovies, getMoviesByGenre } from '../services/api';
 
-function Home() {
+function Home({ selectedGenre }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const loadPopularMovies = async () => {
+        const loadMovies = async () => {
             try {
-                const popularMovies = await getPopularMovies()
-                setMovies(popularMovies)
+                setLoading(true)
+                let moviesData;
+                if (selectedGenre) {
+                    moviesData = await getMoviesByGenre(selectedGenre)
+                } else {
+                    moviesData = await getPopularMovies()
+                }
+                setMovies(moviesData)
+                setError(null)
             } catch (err) {
                 console.log(err)
                 setError("Failed to load movies")
@@ -22,8 +29,8 @@ function Home() {
                 setLoading(false)
             }
         }
-        loadPopularMovies()
-    }, [])
+        loadMovies()
+    }, [selectedGenre])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,7 +47,6 @@ function Home() {
         } finally {
             setLoading(false)
         }
-        // Note: Removing setSearchQuery("") here helps the "No results found for..." message make sense
     }
 
     return (
@@ -74,7 +80,7 @@ function Home() {
                     ) : (
                         <div className="no-result">
                             <h2>No movie Found</h2>
-                            <p>We couldn't find any movies matching "{searchQuery}".</p>
+                            <p>We couldn't find any movies matching your selection.</p>
                         </div>
                     )}
                 </div>

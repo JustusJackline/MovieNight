@@ -6,14 +6,13 @@ function Navbar(){
   return (
     <div className='navbar'>
         <div className="navbar-brand">
-            <Link to="/">Movie App</Link>
-            <div className="navbar-links">
-<Link to="/" className="nav-link">Home</Link>
-<Link to="/favorites" className="nav-link">Favourites</Link>
-
-            </div>
+            <Link to="/">🎬 MovieNight</Link>
         </div>
-      
+        <div className="navbar-links">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/favorites" className="nav-link">❤️ Favorites</Link>
+          <Link to="/downloads" className="nav-link">📥 Downloads</Link>
+        </div>
     </div>
   )
 }

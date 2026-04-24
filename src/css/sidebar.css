@@ -1,0 +1,131 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 80px;
+  width: 250px;
+  height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-right: 2px solid #e94560;
+  overflow-y: auto;
+  z-index: 999;
+  padding: 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-header {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
+  padding: 1rem;
+  border-bottom: 2px solid #e94560;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  color: #e94560;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.genres-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+
+.genre-btn {
+  background: transparent;
+  border: none;
+  border-left: 4px solid transparent;
+  color: #ccc;
+  padding: 12px 1rem;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+}
+
+.genre-btn:hover {
+  background: rgba(233, 69, 96, 0.2);
+  color: #e94560;
+  border-left-color: #e94560;
+  padding-left: 1.2rem;
+}
+
+.genre-btn.active {
+  background: rgba(233, 69, 96, 0.3);
+  color: #e94560;
+  border-left-color: #e94560;
+  font-weight: 600;
+}
+
+.loading-genres {
+  color: #999;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.no-genres {
+  color: #666;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Scrollbar styling */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #e94560;
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #c7254e;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    top: 60px;
+    height: calc(100vh - 60px);
+  }
+
+  .sidebar-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .genre-btn {
+    padding: 10px 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 180px;
+    top: 60px;
+  }
+
+  .sidebar-header {
+    padding: 0.8rem;
+  }
+
+  .genre-btn {
+    padding: 8px 0.6rem;
+    font-size: 0.8rem;
+  }
+}

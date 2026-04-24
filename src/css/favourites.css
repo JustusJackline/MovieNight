@@ -1,15 +1,22 @@
-.favorites {
+.favorites-container {
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
 }
 
-.favorites h2 {
+.favorites-container h2 {
   margin-bottom: 2rem;
   text-align: center;
   font-size: 2.5rem;
-  color: #ffffff;
+  color: gold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 0;
 }
 
 .favorites-empty {
@@ -46,6 +53,6 @@
   }
 }
 
-.movies-grid > * {
+.favorites-grid > * {
   animation: fadeIn 0.3s ease-out forwards;
 }

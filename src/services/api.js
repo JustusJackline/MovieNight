@@ -15,3 +15,9 @@ export const SearchMovies=async(query)=>{
     const data=await response.json();
     return data.results;
 }
+
+export const getMoviesByGenre=async(genreId)=>{
+    const response=await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`);
+    const data=await response.json();
+    return data.results;
+}

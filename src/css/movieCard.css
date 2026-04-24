@@ -48,10 +48,13 @@
   opacity: 1;
 }
 
+.overlay-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
 .favorite-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
   color: white;
   font-size: 1.5rem;
   padding: 0.5rem;
@@ -63,6 +66,8 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
 }
 
 .favorite-btn:hover {
@@ -71,6 +76,27 @@
 
 .favorite-btn.active {
   color: #ff4757;
+}
+
+.download-btn {
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  background-color: rgba(233, 69, 96, 0.7);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: rgba(233, 69, 96, 1);
+  transform: scale(1.1);
 }
 
 .rating-select {
@@ -121,4 +147,179 @@
     height: 32px;
     font-size: 1.2rem;
   }
+}
+
+/* Download Modal Styles */
+.modal-overlay-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 2px solid #e94560;
+}
+
+.modal-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+}
+
+.modal-header-card h2 {
+  margin: 0;
+  color: #e94560;
+  font-size: 1.5rem;
+}
+
+.modal-close-card {
+  background: none;
+  border: none;
+  color: #e94560;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.modal-close-card:hover {
+  transform: scale(1.2);
+}
+
+.modal-body-card {
+  padding: 1.5rem;
+}
+
+.movie-preview-card {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.movie-preview-card img {
+  width: 80px;
+  height: 120px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.movie-preview-card h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1rem;
+  flex: 1;
+}
+
+.settings-group-card {
+  margin-bottom: 1.5rem;
+}
+
+.setting-label-card {
+  display: block;
+  color: #e94560;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.options-group-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+
+.option-btn-card {
+  background: rgba(233, 69, 96, 0.2);
+  border: 2px solid rgba(233, 69, 96, 0.4);
+  color: #ccc;
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.option-btn-card:hover {
+  background: rgba(233, 69, 96, 0.3);
+  border-color: #e94560;
+  color: #e94560;
+}
+
+.option-btn-card.active {
+  background: rgba(233, 69, 96, 0.7);
+  border-color: #e94560;
+  color: white;
+}
+
+.file-size-info-card {
+  background: rgba(233, 69, 96, 0.1);
+  border-left: 4px solid #e94560;
+  padding: 1rem;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.file-size-info-card p {
+  margin: 0;
+}
+
+.file-size-info-card strong {
+  color: #e94560;
+}
+
+.modal-footer-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid rgba(233, 69, 96, 0.3);
+}
+
+.btn-cancel-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-cancel-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.btn-download-card {
+  flex: 1;
+  background: linear-gradient(135deg, #e94560 0%, #c7254e 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-download-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(233, 69, 96, 0.4);
 }

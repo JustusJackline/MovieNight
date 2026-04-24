@@ -5,12 +5,18 @@
 }
 
 .search-form {
+  position: sticky;
+  top: 72px;
+  z-index: 999;
+  background: linear-gradient(180deg, #1a1a2e 0%, rgba(26, 26, 46, 0.95) 100%);
   max-width: 600px;
   margin: 0 auto 2rem;
   display: flex;
   gap: 1rem;
-  padding: 0 1rem;
+  padding: 1rem;
   box-sizing: border-box;
+  border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+  border-radius: 0 0 8px 8px;
 }
 
 .search-input {
@@ -78,6 +84,8 @@
     animation: spin 1s ease-in-out infinite;
     position: relative;
 }
+
+
 
 .spinner::before {
     content: '';
