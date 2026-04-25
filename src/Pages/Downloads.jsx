@@ -13,20 +13,13 @@ function Watchlist({ selectedGenre }) {
   const filteredWatchlist = useMemo(() => {
     let filtered = watchlist
     
-    // Filter by status
+    // Filter by status only
     if (selectedStatus !== 'all') {
       filtered = filtered.filter(item => item.status === selectedStatus)
     }
     
-    // Filter by genre if selected
-    if (selectedGenre) {
-      filtered = filtered.filter(item => 
-        item.genre_ids && item.genre_ids.includes(selectedGenre)
-      )
-    }
-    
     return filtered
-  }, [watchlist, selectedStatus, selectedGenre])
+  }, [watchlist, selectedStatus])
 
   useEffect(() => {
     if (userId) {
