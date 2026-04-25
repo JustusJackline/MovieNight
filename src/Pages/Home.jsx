@@ -2,23 +2,38 @@ import React from 'react'
 import MovieCard from '../Components/MovieCard';
 import { useState, useEffect } from 'react';
 import '../css/home.css';
-import { SearchMovies, getPopularMovies, getMoviesByGenre } from '../services/api';
+import { SearchMovies, getPopularMovies, getMoviesByGenre, getTopRatedMovies, getNewMovies } from '../services/api';
 
 function Home({ selectedGenre }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [category, setCategory] = useState('popular'); // 'popular', 'toprated', 'new'
 
     useEffect(() => {
         const loadMovies = async () => {
             try {
                 setLoading(true)
                 let moviesData;
+                
+                // If genre is selected, show genre movies regardless of category
                 if (selectedGenre) {
                     moviesData = await getMoviesByGenre(selectedGenre)
                 } else {
-                    moviesData = await getPopularMovies()
+                    // Load based on selected category
+                    switch(category) {
+                        case 'toprated':
+                            moviesData = await getTopRatedMovies()
+                            break
+                        case 'new':
+                            moviesData = await getNewMovies()
+                            break
+                        case 'popular':
+                        default:
+                            moviesData = await getPopularMovies()
+                            break
+                    }
                 }
                 setMovies(moviesData)
                 setError(null)
@@ -30,7 +45,7 @@ function Home({ selectedGenre }) {
             }
         }
         loadMovies()
-    }, [selectedGenre])
+    }, [selectedGenre, category])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,6 +76,29 @@ function Home({ selectedGenre }) {
                 />
                 <button type="submit" className="search-button">Search</button>
             </form>
+
+            {!selectedGenre && (
+                <div className="category-tabs">
+                    <button 
+                        className={`tab-btn ${category === 'popular' ? 'active' : ''}`}
+                        onClick={() => setCategory('popular')}
+                    >
+                        🔥 Popular
+                    </button>
+                    <button 
+                        className={`tab-btn ${category === 'toprated' ? 'active' : ''}`}
+                        onClick={() => setCategory('toprated')}
+                    >
+                        ⭐ Top Rated
+                    </button>
+                    <button 
+                        className={`tab-btn ${category === 'new' ? 'active' : ''}`}
+                        onClick={() => setCategory('new')}
+                    >
+                        🆕 New Movies
+                    </button>
+                </div>
+            )}
 
             {error && <div className='error-message'>{error}</div>}
 

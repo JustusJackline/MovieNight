@@ -29,6 +29,90 @@
   padding: 2rem;
 }
 
+.status-filters {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+}
+
+.status-filter {
+  padding: 0.75rem 1.5rem;
+  background: rgba(100, 100, 100, 0.2);
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.status-filter:hover {
+  background: rgba(233, 69, 96, 0.3);
+  transform: translateY(-2px);
+}
+
+.status-filter.active {
+  background: linear-gradient(135deg, #e94560 0%, #c7254e 100%);
+  box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
+}
+
+.status-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.status-select {
+  padding: 0.5rem;
+  background: rgba(50, 50, 50, 0.8);
+  color: white;
+  border: 1px solid rgba(233, 69, 96, 0.5);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.status-select:hover {
+  background: rgba(50, 50, 50, 0.95);
+  border-color: #e94560;
+}
+
+.status-select option {
+  background: #1a1a2e;
+  color: white;
+}
+
+.movie-rating-small {
+  color: gold;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
+
+.saved-date {
+  font-size: 0.85rem;
+  color: #bbb;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.status-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .downloads-toolbar {
   display: flex;
   justify-content: space-between;

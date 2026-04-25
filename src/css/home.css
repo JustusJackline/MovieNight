@@ -48,6 +48,38 @@
   background-color: #f40612;
 }
 
+.category-tabs {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.tab-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(100, 100, 100, 0.3);
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  background-color: rgba(233, 69, 96, 0.5);
+  transform: translateY(-2px);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #e94560 0%, #c7254e 100%);
+  border-color: #e94560;
+  box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
+}
+
 
 @media (max-width: 639px) {
   .home {
