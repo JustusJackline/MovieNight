@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { FavoritesContext } from './FavoritesContextFile';
+import { useUser } from './useUser';
 
 export const FavoritesProvider = ({ children }) => {
+  const { userId, getUserStorageKey } = useUser()
   const [favorites, setFavorites] = useState(() => {
-    const savedFavorites = localStorage.getItem('favorites');
+    if (!userId) return []
+    const storageKey = `${userId}_favorites`
+    const savedFavorites = localStorage.getItem(storageKey);
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   });
 
   // Save favorites to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }, [favorites]);
+    if (userId) {
+      const storageKey = `${userId}_favorites`
+      localStorage.setItem(storageKey, JSON.stringify(favorites));
+    }
+  }, [favorites, userId]);
 
   const addFavorite = (movie) => {
     setFavorites((prevFavorites) => {

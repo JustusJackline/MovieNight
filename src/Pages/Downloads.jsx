@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import '../css/downloads.css'
 import { useNavigate } from 'react-router-dom'
+import { useUser } from '../context/useUser'
 
 function Watchlist({ selectedGenre }) {
+  const { userId } = useUser()
   const [watchlist, setWatchlist] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedStatus, setSelectedStatus] = useState('all')
@@ -27,12 +29,15 @@ function Watchlist({ selectedGenre }) {
   }, [watchlist, selectedStatus, selectedGenre])
 
   useEffect(() => {
-    loadWatchlist()
-  }, [])
+    if (userId) {
+      loadWatchlist()
+    }
+  }, [userId])
 
   const loadWatchlist = () => {
     try {
-      const savedWatchlist = localStorage.getItem('watchlist')
+      const storageKey = `${userId}_watchlist`
+      const savedWatchlist = localStorage.getItem(storageKey)
       const watchlistData = savedWatchlist ? JSON.parse(savedWatchlist) : []
       setWatchlist(watchlistData)
     } catch (error) {
@@ -47,19 +52,22 @@ function Watchlist({ selectedGenre }) {
       item.movieId === movieId ? { ...item, status: newStatus } : item
     )
     setWatchlist(updatedWatchlist)
-    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist))
+    const storageKey = `${userId}_watchlist`
+    localStorage.setItem(storageKey, JSON.stringify(updatedWatchlist))
   }
 
   const handleDelete = (movieId) => {
     const updatedWatchlist = watchlist.filter(item => item.movieId !== movieId)
     setWatchlist(updatedWatchlist)
-    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist))
+    const storageKey = `${userId}_watchlist`
+    localStorage.setItem(storageKey, JSON.stringify(updatedWatchlist))
   }
 
   const handleDeleteAll = () => {
     if (window.confirm('Are you sure you want to clear your entire watchlist?')) {
       setWatchlist([])
-      localStorage.setItem('watchlist', JSON.stringify([]))
+      const storageKey = `${userId}_watchlist`
+      localStorage.setItem(storageKey, JSON.stringify([]))
     }
   }
 

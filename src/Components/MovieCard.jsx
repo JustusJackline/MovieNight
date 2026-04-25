@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import '../css/movieCard.css'
 import { useFavorites } from '../context/useFavorites'
+import { useUser } from '../context/useUser'
 
 function MovieCard({movie}){
   const { addFavorite, removeFavorite, isFavorite } = useFavorites()
+  const { userId } = useUser()
   const favorite = isFavorite(movie.id)
   const [showSaveModal, setShowSaveModal] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState('not-watched')
@@ -33,7 +35,8 @@ function MovieCard({movie}){
       savedAt: new Date().toISOString(),
     }
 
-    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]')
+    const storageKey = `${userId}_watchlist`
+    const watchlist = JSON.parse(localStorage.getItem(storageKey) || '[]')
     const existingIndex = watchlist.findIndex(
       (item) => item.movieId === newWatchlistItem.movieId
     )
@@ -44,7 +47,7 @@ function MovieCard({movie}){
       watchlist.push(newWatchlistItem)
     }
 
-    localStorage.setItem('watchlist', JSON.stringify(watchlist))
+    localStorage.setItem(storageKey, JSON.stringify(watchlist))
     setShowSaveModal(false)
     setSelectedStatus('not-watched')
   }
