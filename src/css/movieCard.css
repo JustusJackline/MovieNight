@@ -151,6 +151,25 @@
   font-size: 0.9rem;
 }
 
+.movie-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rating-star {
+  font-size: 1.1rem;
+}
+
+.rating-value {
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
 .user-rating {
   color: #ffd700;
   font-size: 0.9rem;

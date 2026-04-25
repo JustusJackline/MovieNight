@@ -2,10 +2,17 @@
 
 MovieNight is a React + Vite web application for browsing and streaming movies online with advanced player controls, favorites management, and watch history tracking.
 
+## 🌐 Live Demo
+
+**[Visit MovieNight Now](https://movie-night-six.vercel.app)** - Click here to watch movies instantly!
+
+Deployment URL: `https://movie-night-six.vercel.app`
+
 ## Features
 
 - **Browse & Search Movies**: Search and explore popular movies using TMDB API
 - **Stream Movies Online**: Watch movies directly in your browser with high-quality streaming
+- **Movie Ratings**: View ratings and user reviews for every movie to help you decide what to watch
 - **Advanced Video Player**: Full-featured HTML5 player with:
   - Play/Pause controls with intuitive UI
   - Playback speed adjustment (0.5x, 1x, 1.5x, 2x)

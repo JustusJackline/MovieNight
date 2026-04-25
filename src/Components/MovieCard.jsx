@@ -116,6 +116,10 @@ function MovieCard({movie}){
           <div className="movie-info">
               <h3>{movie.title}</h3>
               <p>{movie.release_date}</p>
+              <div className="movie-rating">
+                <span className="rating-star">⭐</span>
+                <span className="rating-value">{movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}/10</span>
+              </div>
           </div>
         </div>
 
