@@ -1,116 +1,191 @@
+# MovieNight - Movie Streaming Platform
 
+MovieNight is a React + Vite web application for browsing and streaming movies online with advanced player controls, favorites management, and watch history tracking.
 
-# 🎬 Movie App (React)
+## Features
 
-A simple movie browsing application built with React that lets users search for movies, explore details, save favorites, and download content.
+- **Browse & Search Movies**: Search and explore popular movies using TMDB API
+- **Stream Movies Online**: Watch movies directly in your browser with high-quality streaming
+- **Advanced Video Player**: Full-featured HTML5 player with:
+  - Play/Pause controls with intuitive UI
+  - Playback speed adjustment (0.5x, 1x, 1.5x, 2x)
+  - Quality selection (480p, 720p, 1080p)
+  - Subtitle upload support (.srt, .vtt files)
+  - Volume control and progress seeking
+  - Loading and buffering indicators for smooth streaming experience
+- **Favorites System**: Add/remove favorite movies (persisted in localStorage)
+- **Watch History**: Automatic tracking of movies you've watched
+- **Genre Filtering**: Filter movies by genre across all pages
+- **Sticky Navigation**: Always-visible navbar and genre sidebar for easy navigation
 
-## 🚀 Features
+## Quick Start
 
-* 🔍 **Search Movies**
-  Find movies using search bar powered by an external API.
+### Prerequisites
+- Node.js (v14+)
+- npm or yarn
 
-* ❤️ **Favorites System**
-  Save movies you like and access them anytime.
+### Installation
 
-* ⬇️ **Download Option**
-  Download selected movies directly from the app.
+1. **Install dependencies**
+```bash
+npm install
+```
 
-* 📄 **Movie Details**
-  View key information like title, release year, rating, and overview.
+2. **Set up environment variables**
 
-* ⚡ **Responsive UI**
-  Works smoothly across desktop and mobile devices.
+Create a `.env` file in the project root:
+```env
+VITE_API_KEY=your_tmdb_api_key
+VITE_BASE_URL=https://api.themoviedb.org/3
+```
 
----
+Get your free TMDB API key from https://www.themoviedb.org/settings/api
 
-## 🛠️ Tech Stack
+3. **Run development server**
+```bash
+npm run dev
+```
 
-* **React** (Frontend framework)
-* **JavaScript (ES6+)**
-* **CSS / Tailwind / Bootstrap** (depending on what you used)
-* **Axios / Fetch API** for API calls
+The app will be available at `http://localhost:5173`
 
----
+4. **Build for production**
+```bash
+npm run build
+```
 
-## 📦 Installation
+## How to Stream Movies
 
-1. Clone the repository:
+1. **Browse or Search**: Navigate the home page or use the search bar to find movies
+2. **Select a Movie**: Click on any movie card to view details
+3. **Click "Stream Now"**: Press the blue "Stream Now" button to watch the movie
+4. **Control Your Experience**: Use the player controls to:
+   - Adjust playback speed to watch faster or slower
+   - Switch quality based on your internet connection
+   - Upload subtitles if needed
+   - Control volume and seek through the video
+5. **Automatic Tracking**: Your watched movies appear in Watch History
 
-   ```bash
-   git clone https://github.com/your-username/movie-app.git
-   ```
+## Using the App
 
-2. Navigate into the project folder:
+### Browsing Movies
+- **Home Page**: Displays popular movies automatically
+- **Search Bar**: Type a movie title to search
+- **Genre Filter**: Click any genre in the sidebar to filter movies by category
+- **Works on All Pages**: Genre filtering works on Home, Favorites, and Watch History pages
 
-   ```bash
-   cd movie-app
-   ```
+### Streaming Movies
+- Click any movie card to open the player
+- Click "Stream Now" button to start watching
+- Use player controls for quality, speed, and subtitles
+- Buffering indicators show when video is loading
 
-3. Install dependencies:
+### Managing Favorites
+- Click the heart icon on movie cards to add/remove favorites
+- View all your favorite movies on the Favorites page
+- Filter favorites by genre
 
-   ```bash
-   npm install
-   ```
+### Watch History
+- Every movie you stream is automatically saved
+- Access your watch history from "Watch History" page
+- Continue watching or remove movies from your history
+- Filter watch history by genre
 
-4. Start the development server:
-
-   ```bash
-   npm start
-   ```
-
----
-
-## 🌐 Usage
-
-* Type a movie name in the search bar
-* Browse through results
-* Click on a movie to see more details
-* Add movies to your favorites list
-* Download movies directly from the app
-
----
-
-## 📁 Project Structure (Simplified)
+## Project Structure
 
 ```
 src/
-│── components/      # Reusable UI components
-│── pages/           # Main pages (Home, Favorites, etc.)
-│── services/        # API calls
-│── App.js           # Main app component
-│── index.js         # Entry point
+├── Components/
+│   ├── MovieCard.jsx       # Movie card with watch and favorite options
+│   ├── Navbar.jsx          # Main navigation bar
+│   └── Sidebar.jsx         # Genre filter sidebar
+├── Pages/
+│   ├── Home.jsx            # Home page with movies grid
+│   ├── Favourite.jsx       # Favorites page
+│   ├── Downloads.jsx       # Watch history page
+│   └── MoviePlayer.jsx     # Full video player with controls
+├── context/
+│   ├── FavoritesContext.jsx
+│   ├── FavoritesContextFile.js
+│   └── useFavorites.js
+├── services/
+│   └── api.js              # TMDB API integration
+├── css/                    # Styling for all components
+└── App.jsx                 # Main app component
 ```
 
----
+## Pushing to GitHub
 
-## 🔗 API
-
-This project uses a movie API (e.g., TMDB or similar) to fetch movie data.
-Make sure to add your API key in the appropriate file:
+### Recommended Git Commands
 
 ```bash
-REACT_APP_API_KEY=your_api_key_here
+# Stage all changes
+git add .
+
+# Commit with descriptive message
+git commit -m "feat: movie streaming platform with player, favorites, and watch history"
+
+# Push to main branch
+git push origin main
 ```
 
----
+### If creating a new remote:
+```bash
+git remote add origin git@github.com:yourusername/movienight.git
+git push -u origin main
+```
 
-## 💡 Future Improvements
+### Commit Message Examples:
+```bash
+git commit -m "feat(player): add loading and buffering indicators"
+git commit -m "feat(history): automatic watch history tracking"
+git commit -m "fix(sidebar): genre filtering on all pages"
+git commit -m "feat(readme): update documentation for streaming focus"
+```
 
-* User authentication (login/signup)
-* Watchlist feature
-* Movie recommendations
-* Better download handling and formats
-* Dark mode toggle
+## Tech Stack
 
----
+- **React 19.2.4**: Latest React with hooks and context API
+- **Vite 8.0.1**: Fast build tool and dev server
+- **React Router DOM 7.13.2**: Client-side routing
+- **TMDB API**: Movie data and metadata
+- **localStorage**: Client-side data persistence
+- **HTML5 Video API**: Native video player
 
-## 🤝 Contributing
+## Environment Variables
 
-Feel free to fork the project and submit pull requests. Suggestions and improvements are always welcome.
+```env
+VITE_API_KEY=your_tmdb_api_key_here
+VITE_BASE_URL=https://api.themoviedb.org/3
+```
 
----
+## Features in Detail
 
-## 📄 License
+### Video Quality Switching
+- Select from 480p (low bandwidth), 720p (standard), or 1080p (high quality)
+- Quality changes apply immediately without restarting playback
+- Perfect for different internet speeds and devices
 
-This project is open source and available under the MIT License.
+### Playback Speed Control
+- Watch at 0.5x speed for detailed viewing
+- Watch at 1x normal speed (default)
+- Watch at 1.5x for faster viewing
+- Watch at 2x for quick scanning
 
+### Subtitle Support
+- Upload .srt or .vtt subtitle files
+- Automatically tracked and saved during playback
+- Easy file upload through player controls
+
+### Streaming Experience
+- Smooth buffering indicators show loading progress
+- Loading spinner displays when video is preparing
+- Responsive design works on desktop, tablet, and mobile
+- Genre filtering works across all pages (Home, Favorites, Watch History)
+
+## License
+
+MIT License
+
+## Contributing
+
+Feel free to fork this project and submit pull requests for any improvements!

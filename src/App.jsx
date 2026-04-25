@@ -27,8 +27,8 @@ function App() {
           <main className='main-content'>
             <Routes>
               <Route path='/' element={<Home selectedGenre={selectedGenre} />}></Route>
-              <Route path='/favorites' element={<Favourite/>}></Route>
-              <Route path='/downloads' element={<Downloads/>}></Route>
+              <Route path='/favorites' element={<Favourite selectedGenre={selectedGenre} />}></Route>
+              <Route path='/downloads' element={<Downloads selectedGenre={selectedGenre} />}></Route>
               <Route path='/player/:movieId' element={<MoviePlayer/>}></Route>
             </Routes>
           </main>

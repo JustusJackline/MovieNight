@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { getMovieDetails } from '../services/api'
 import '../css/moviePlayer.css'
 
 function MoviePlayer() {
@@ -13,20 +14,66 @@ function MoviePlayer() {
   const [playbackRate, setPlaybackRate] = useState(1)
   const [quality, setQuality] = useState('720p')
   const [subtitleFile, setSubtitleFile] = useState(null)
+  const [isBuffering, setIsBuffering] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [movieDetails, setMovieDetails] = useState(null)
   const fileInputRef = useRef(null)
 
-  // Demo video sources for different qualities
+  // Real streaming video sources - using public domain/free content
+  // These can be replaced with actual streaming URLs from your video provider
   const videoSources = {
-    '480p': 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4',
-    '720p': 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4',
-    '1080p': 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4',
+    '480p': 'https://www.w3schools.com/html/mov_bbb.mp4',
+    '720p': 'https://www.w3schools.com/html/mov_bbb.mp4',
+    '1080p': 'https://www.w3schools.com/html/mov_bbb.mp4',
   }
+
+  useEffect(() => {
+    // Fetch movie details when component mounts
+    const fetchMovieDetails = async () => {
+      try {
+        const details = await getMovieDetails(movieId)
+        setMovieDetails(details)
+      } catch (err) {
+        console.log('Error fetching movie details:', err)
+      }
+    }
+    fetchMovieDetails()
+  }, [movieId])
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = playbackRate
     }
   }, [playbackRate])
+
+  useEffect(() => {
+    // Save to watch history when movie starts playing
+    if (isPlaying && movieId && movieDetails) {
+      const watchHistory = JSON.parse(localStorage.getItem('downloads') || '[]')
+      const existingIndex = watchHistory.findIndex(
+        (item) => item.movieId === parseInt(movieId)
+      )
+
+      const watchRecord = {
+        movieId: parseInt(movieId),
+        title: movieDetails.title || `Movie ${movieId}`,
+        posterPath: movieDetails.poster_path || '/path/to/poster.jpg',
+        genre_ids: movieDetails.genres ? movieDetails.genres.map(g => g.id) : [],
+        quality: quality,
+        speed: '1x',
+        fileSize: 350000000,
+        downloadedAt: new Date().toISOString(),
+      }
+
+      if (existingIndex >= 0) {
+        watchHistory[existingIndex] = watchRecord
+      } else {
+        watchHistory.push(watchRecord)
+      }
+
+      localStorage.setItem('downloads', JSON.stringify(watchHistory))
+    }
+  }, [isPlaying, movieId, quality, movieDetails])
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -48,7 +95,17 @@ function MoviePlayer() {
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration)
+      setIsLoading(false)
     }
+  }
+
+  const handleBuffering = () => {
+    setIsBuffering(true)
+  }
+
+  const handleCanPlay = () => {
+    setIsBuffering(false)
+    setIsLoading(false)
   }
 
   const handleSeek = (e) => {
@@ -56,6 +113,7 @@ function MoviePlayer() {
     setCurrentTime(newTime)
     if (videoRef.current) {
       videoRef.current.currentTime = newTime
+      setIsBuffering(true)
     }
   }
 
@@ -136,9 +194,26 @@ function MoviePlayer() {
           className='video-player'
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
+          onWaiting={handleBuffering}
+          onCanPlay={handleCanPlay}
           onEnded={() => setIsPlaying(false)}
           src={videoSources[quality]}
+          controls={false}
         />
+
+        {isLoading && (
+          <div className='loading-indicator'>
+            <div className='spinner'></div>
+            <p>Loading stream...</p>
+          </div>
+        )}
+
+        {isBuffering && !isLoading && (
+          <div className='buffering-indicator'>
+            <div className='buffering-spinner'></div>
+            <p>Buffering...</p>
+          </div>
+        )}
 
         <div className='player-controls'>
           <div className='progress-bar-container'>

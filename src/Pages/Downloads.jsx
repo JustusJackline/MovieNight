@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import '../css/downloads.css'
 import { useNavigate } from 'react-router-dom'
 
-function Downloads() {
+function Downloads({ selectedGenre }) {
   const [downloads, setDownloads] = useState([])
   const [loading, setLoading] = useState(true)
   const [showDownloadModal, setShowDownloadModal] = useState(false)
@@ -10,6 +10,16 @@ function Downloads() {
   const [selectedQuality, setSelectedQuality] = useState('720p')
   const [selectedSpeed, setSelectedSpeed] = useState('1x')
   const navigate = useNavigate()
+
+  const filteredDownloads = useMemo(() => {
+    if (!selectedGenre) {
+      return downloads
+    }
+    // Filter watch history by genre if a genre is selected
+    return downloads.filter(download => 
+      download.genre_ids && download.genre_ids.includes(selectedGenre)
+    )
+  }, [downloads, selectedGenre])
 
   useEffect(() => {
     loadDownloads()
@@ -70,12 +80,23 @@ function Downloads() {
   }
 
   const triggerDownload = (downloadData) => {
+    // Create a mock MP4 file with proper headers
+    const mockData = new Uint8Array([
+      0x00, 0x00, 0x00, 0x20, 0x66, 0x74, 0x79, 0x70, // ftyp box
+      0x69, 0x73, 0x6f, 0x6d, 0x00, 0x00, 0x00, 0x00,
+      0x69, 0x73, 0x6f, 0x6d, 0x69, 0x73, 0x6f, 0x32,
+      0x6d, 0x70, 0x34, 0x31,
+    ])
+
+    const blob = new Blob([mockData], { type: 'video/mp4' })
+    const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
-    link.href = 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4'
+    link.href = url
     link.download = `${downloadData.title}-${downloadData.quality}-${downloadData.speed}.mp4`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+    URL.revokeObjectURL(url)
   }
 
   const calculateFileSize = (quality) => {
@@ -125,8 +146,8 @@ function Downloads() {
   return (
     <div className='downloads-container'>
       <div className='downloads-header'>
-        <h1>📥 My Library</h1>
-        <p>Your saved movies</p>
+        <h1>� Watch History</h1>
+        <p>Movies you've streamed</p>
       </div>
 
       {loading ? (
@@ -134,19 +155,19 @@ function Downloads() {
           <div className='spinner'></div>
           <p>Loading downloads...</p>
         </div>
-      ) : downloads.length > 0 ? (
+      ) : filteredDownloads.length > 0 ? (
         <div className='downloads-content'>
           <div className='downloads-actions'>
             <span className='downloads-count'>
-              {downloads.length} {downloads.length === 1 ? 'movie' : 'movies'} saved
+              {filteredDownloads.length} {filteredDownloads.length === 1 ? 'movie' : 'movies'} watched
             </span>
             <button className='delete-all-btn' onClick={handleDeleteAll}>
-              🗑️ Clear Library
+              🗑️ Clear History
             </button>
           </div>
 
           <div className='downloads-grid'>
-            {downloads.map((download) => (
+            {filteredDownloads.map((download) => (
               <div key={download.movieId} className='download-card'>
                 <div className='download-poster'>
                   <img
@@ -191,15 +212,15 @@ function Downloads() {
                   <div className='download-actions'>
                     <button
                       className='re-download-btn'
-                      onClick={() => handleDownloadClick(download)}
-                      title='Download again with different quality'
+                      onClick={() => handlePlay(download.movieId)}
+                      title='Watch again'
                     >
-                      ⬇️ Re-download
+                      ▶️ Watch Again
                     </button>
                     <button
                       className='delete-btn'
                       onClick={() => handleDelete(download.movieId)}
-                      title='Delete download'
+                      title='Remove from history'
                     >
                       🗑️
                     </button>
@@ -212,10 +233,10 @@ function Downloads() {
       ) : (
         <div className='downloads-empty'>
           <div className='empty-icon'>🎬</div>
-          <h2>No Movies Saved Yet</h2>
-          <p>Save your favorite movies from the movie cards to build your library!</p>
+          <h2>{selectedGenre ? 'No Watch History in This Genre' : 'No Watch History Yet'}</h2>
+          <p>{selectedGenre ? 'Try selecting a different genre or stream more movies' : 'Start streaming movies to see your watch history here!'}</p>
           <button className='explore-btn' onClick={() => navigate('/')}>
-            🎬 Explore Movies
+            🎬 Browse Movies
           </button>
         </div>
       )}

@@ -25,6 +25,11 @@ function MovieCard({movie}){
     setShowDownloadModal(true)
   }
 
+  function onWatchClick(e){
+    e.stopPropagation()
+    navigate(`/player/${movie.id}`)
+  }
+
   function onCardClick(){
     navigate(`/player/${movie.id}`)
   }
@@ -53,15 +58,30 @@ function MovieCard({movie}){
 
     localStorage.setItem('downloads', JSON.stringify(downloads))
 
-    // Trigger download
+    // Create and download file
+    createAndDownloadFile(newDownload)
+
+    setShowDownloadModal(false)
+  }
+
+  const createAndDownloadFile = (downloadData) => {
+    // Create a mock MP4 file with proper headers
+    const mockData = new Uint8Array([
+      0x00, 0x00, 0x00, 0x20, 0x66, 0x74, 0x79, 0x70, // ftyp box
+      0x69, 0x73, 0x6f, 0x6d, 0x00, 0x00, 0x00, 0x00,
+      0x69, 0x73, 0x6f, 0x6d, 0x69, 0x73, 0x6f, 0x32,
+      0x6d, 0x70, 0x34, 0x31,
+    ])
+
+    const blob = new Blob([mockData], { type: 'video/mp4' })
+    const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
-    link.href = 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/ForBiggerBlazes.mp4'
-    link.download = `${newDownload.title}-${newDownload.quality}-${newDownload.speed}.mp4`
+    link.href = url
+    link.download = `${downloadData.title}-${downloadData.quality}-${downloadData.speed}.mp4`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-
-    setShowDownloadModal(false)
+    URL.revokeObjectURL(url)
   }
 
   const calculateFileSize = (quality) => {
@@ -88,9 +108,9 @@ function MovieCard({movie}){
               <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
           </div>
           <div className="movie-overlay">
+            <button className="watch-btn" onClick={onWatchClick} title="Watch movie now">▶️ Stream Now</button>
             <div className="overlay-buttons">
               <button className="favorite-btn" onClick={onFavoriteClick} title="Add to favorites">{favorite ? '❤️' : '🤍'}</button>
-              <button className="download-btn" onClick={onDownloadClick} title="Download movie">⬇️</button>
             </div>
           </div>
           <div className="movie-info">
