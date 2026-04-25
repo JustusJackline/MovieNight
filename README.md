@@ -1,29 +1,39 @@
-# MovieNight - Movie Streaming Platform
+# MovieNight - Movie Discovery & Watchlist Tracker
 
-MovieNight is a React + Vite web application for browsing and streaming movies online with advanced player controls, favorites management, and watch history tracking.
+MovieNight is a React + Vite web application for discovering movies, viewing ratings and recommendations, and tracking your personal watchlist with viewing progress.
 
 ## 🌐 Live Demo
 
-**[Visit MovieNight Now](https://movie-night-six.vercel.app)** - Click here to watch movies instantly!
+**[Visit MovieNight Now](https://movie-night-six.vercel.app)** - Discover and track movies you want to watch!
 
 Deployment URL: `https://movie-night-six.vercel.app`
 
 ## Features
 
-- **Browse & Search Movies**: Search and explore popular movies using TMDB API
-- **Stream Movies Online**: Watch movies directly in your browser with high-quality streaming
-- **Movie Ratings**: View ratings and user reviews for every movie to help you decide what to watch
-- **Advanced Video Player**: Full-featured HTML5 player with:
-  - Play/Pause controls with intuitive UI
-  - Playback speed adjustment (0.5x, 1x, 1.5x, 2x)
-  - Quality selection (480p, 720p, 1080p)
-  - Subtitle upload support (.srt, .vtt files)
-  - Volume control and progress seeking
-  - Loading and buffering indicators for smooth streaming experience
-- **Favorites System**: Add/remove favorite movies (persisted in localStorage)
-- **Watch History**: Automatic tracking of movies you've watched
-- **Genre Filtering**: Filter movies by genre across all pages
-- **Sticky Navigation**: Always-visible navbar and genre sidebar for easy navigation
+### Movie Discovery
+- **Browse Movies**: Explore Popular, Top Rated, and New upcoming movies from TMDB
+- **Search**: Find movies by title instantly
+- **Genre Filtering**: Filter all movies by genre
+- **Movie Ratings**: View TMDB ratings (1-10 scale) on every movie card to help decide what to watch
+- **Movie Details**: See ratings, release dates, and IMDb scores
+
+### Watchlist Tracking
+- **Save Movies**: Save movies to your personal watchlist with one click
+- **Track Status**: Mark each movie as:
+  - 📕 **Not Watched** - Want to watch
+  - 📘 **In Progress** - Currently watching
+  - 📗 **Completed** - Finished watching
+- **Update Progress**: Change status anytime from your watchlist
+- **Filter by Status**: View all movies or filter by specific status
+- **Persistent Storage**: Watchlist saves to browser localStorage
+
+### Additional Features
+- **Favorites**: Mark your favorite movies separately
+- **Genre Sidebar**: Quick access to browse by genre
+- **Sticky Navigation**: Navigation bar always visible while scrolling
+- **Sticky Category Tabs**: Popular/Top Rated/New tabs stay visible for easy switching
+- **Sticky Status Filter**: Watchlist status filter bar stays at top for quick filtering
+- **Responsive Design**: Works on desktop, tablet, and mobile
 
 ## Quick Start
 
@@ -60,65 +70,100 @@ The app will be available at `http://localhost:5173`
 npm run build
 ```
 
-## How to Stream Movies
+## How to Use MovieNight
 
-1. **Browse or Search**: Navigate the home page or use the search bar to find movies
-2. **Select a Movie**: Click on any movie card to view details
-3. **Click "Stream Now"**: Press the blue "Stream Now" button to watch the movie
-4. **Control Your Experience**: Use the player controls to:
-   - Adjust playback speed to watch faster or slower
-   - Switch quality based on your internet connection
-   - Upload subtitles if needed
-   - Control volume and seek through the video
-5. **Automatic Tracking**: Your watched movies appear in Watch History
+### 1. Discover Movies
+- Browse **Popular**, **Top Rated**, or **New Movies** using the tabs on the home page
+- Search for specific movies using the search bar
+- Filter by genre using the sidebar
 
-## Using the App
+### 2. View Movie Details
+- Click any movie card to see:
+  - Movie title and release date
+  - Rating (⭐ scale)
+  - TMDB score
+  - Similar movies
 
-### Browsing Movies
-- **Home Page**: Displays popular movies automatically
-- **Search Bar**: Type a movie title to search
-- **Genre Filter**: Click any genre in the sidebar to filter movies by category
-- **Works on All Pages**: Genre filtering works on Home, Favorites, and Watch History pages
+### 3. Save to Watchlist
+- Click **📌 Save for Later** on any movie card
+- Select initial status:
+  - Not Watched (want to watch)
+  - In Progress (currently watching)
+  - Completed (finished watching)
+- Movie is saved to your watchlist
 
-### Streaming Movies
-- Click any movie card to open the player
-- Click "Stream Now" button to start watching
-- Use player controls for quality, speed, and subtitles
-- Buffering indicators show when video is loading
+### 4. Manage Your Watchlist
+- Go to **My Watchlist** page from navbar
+- Filter by status using sticky filter bar:
+  - **All** - View all saved movies
+  - **Not Watched** - Movies you want to watch
+  - **In Progress** - Movies you're currently watching
+  - **Completed** - Movies you've finished
+- Update status using dropdown on each movie card
+- Remove movies from watchlist with delete button
 
-### Managing Favorites
-- Click the heart icon on movie cards to add/remove favorites
-- View all your favorite movies on the Favorites page
-- Filter favorites by genre
-
-### Watch History
-- Every movie you stream is automatically saved
-- Access your watch history from "Watch History" page
-- Continue watching or remove movies from your history
-- Filter watch history by genre
+### 5. Track Your Progress
+- See how many movies in each status category
+- Update status as you watch movies
+- Mark movies complete when finished
 
 ## Project Structure
 
 ```
 src/
 ├── Components/
-│   ├── MovieCard.jsx       # Movie card with watch and favorite options
-│   ├── Navbar.jsx          # Main navigation bar
+│   ├── MovieCard.jsx       # Movie card with save button
+│   ├── Navbar.jsx          # Main navigation
 │   └── Sidebar.jsx         # Genre filter sidebar
 ├── Pages/
-│   ├── Home.jsx            # Home page with movies grid
-│   ├── Favourite.jsx       # Favorites page
-│   ├── Downloads.jsx       # Watch history page
-│   └── MoviePlayer.jsx     # Full video player with controls
+│   ├── Home.jsx            # Movie discovery with category tabs
+│   ├── Favourite.jsx       # Favorite movies page
+│   ├── Downloads.jsx       # Watchlist with status tracking
+│   └── MoviePlayer.jsx     # Movie details (can be enhanced)
 ├── context/
 │   ├── FavoritesContext.jsx
 │   ├── FavoritesContextFile.js
 │   └── useFavorites.js
 ├── services/
 │   └── api.js              # TMDB API integration
-├── css/                    # Styling for all components
+├── css/                    # Component styling
 └── App.jsx                 # Main app component
 ```
+
+## Tech Stack
+
+- **React 19.2.4**: Latest React with hooks and context API
+- **Vite 8.0.1**: Fast build tool and dev server
+- **React Router DOM 7.13.2**: Client-side routing
+- **TMDB API**: Movie data and metadata
+- **localStorage**: Client-side data persistence
+- **CSS3**: Modern styling with gradients and animations
+
+## Environment Variables
+
+```env
+VITE_API_KEY=your_tmdb_api_key_here
+VITE_BASE_URL=https://api.themoviedb.org/3
+```
+
+## Features in Detail
+
+### Movie Categories
+- **Popular**: Currently trending and popular movies
+- **Top Rated**: Highest-rated movies on TMDB
+- **New Movies**: Upcoming releases you can add to your watchlist
+
+### Watchlist Status System
+- **Not Watched** 📕: Movies you want to watch
+- **In Progress** 📘: Movies you're currently watching
+- **Completed** 📗: Movies you've finished watching
+- Change status anytime from the watchlist page
+
+### Smart Filtering
+- Genre filtering works across all pages
+- Status filtering on watchlist with persistent sticky bar
+- Search functionality across all categories
+- Combined filtering (genre + status)
 
 ## Pushing to GitHub
 
@@ -129,7 +174,7 @@ src/
 git add .
 
 # Commit with descriptive message
-git commit -m "feat: movie streaming platform with player, favorites, and watch history"
+git commit -m "feat: movie discovery and watchlist tracking platform"
 
 # Push to main branch
 git push origin main
@@ -141,53 +186,17 @@ git remote add origin git@github.com:yourusername/movienight.git
 git push -u origin main
 ```
 
-### Commit Message Examples:
-```bash
-git commit -m "feat(player): add loading and buffering indicators"
-git commit -m "feat(history): automatic watch history tracking"
-git commit -m "fix(sidebar): genre filtering on all pages"
-git commit -m "feat(readme): update documentation for streaming focus"
-```
+## Deploying to Vercel
 
-## Tech Stack
+1. Push your project to GitHub
+2. Go to [Vercel](https://vercel.com)
+3. Click "New Project" and import from GitHub
+4. Add environment variables:
+   - `VITE_API_KEY`: Your TMDB API key
+   - `VITE_BASE_URL`: https://api.themoviedb.org/3
+5. Deploy!
 
-- **React 19.2.4**: Latest React with hooks and context API
-- **Vite 8.0.1**: Fast build tool and dev server
-- **React Router DOM 7.13.2**: Client-side routing
-- **TMDB API**: Movie data and metadata
-- **localStorage**: Client-side data persistence
-- **HTML5 Video API**: Native video player
-
-## Environment Variables
-
-```env
-VITE_API_KEY=your_tmdb_api_key_here
-VITE_BASE_URL=https://api.themoviedb.org/3
-```
-
-## Features in Detail
-
-### Video Quality Switching
-- Select from 480p (low bandwidth), 720p (standard), or 1080p (high quality)
-- Quality changes apply immediately without restarting playback
-- Perfect for different internet speeds and devices
-
-### Playback Speed Control
-- Watch at 0.5x speed for detailed viewing
-- Watch at 1x normal speed (default)
-- Watch at 1.5x for faster viewing
-- Watch at 2x for quick scanning
-
-### Subtitle Support
-- Upload .srt or .vtt subtitle files
-- Automatically tracked and saved during playback
-- Easy file upload through player controls
-
-### Streaming Experience
-- Smooth buffering indicators show loading progress
-- Loading spinner displays when video is preparing
-- Responsive design works on desktop, tablet, and mobile
-- Genre filtering works across all pages (Home, Favorites, Watch History)
+Every push to GitHub will automatically redeploy your app.
 
 ## License
 
@@ -195,4 +204,13 @@ MIT License
 
 ## Contributing
 
-Feel free to fork this project and submit pull requests for any improvements!
+Feel free to fork this project and submit pull requests for improvements!
+
+## Future Enhancements
+
+- User accounts and cloud sync
+- Advanced search filters (year, director, actors)
+- Movie reviews and ratings from users
+- Sharing watchlists with friends
+- Watch statistics and trends
+- Recommended movies based on watchlist
