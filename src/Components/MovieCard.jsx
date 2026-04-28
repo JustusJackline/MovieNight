@@ -8,6 +8,7 @@ function MovieCard({movie}){
   const { userId } = useUser()
   const favorite = isFavorite(movie.id)
   const [showSaveModal, setShowSaveModal] = useState(false)
+  const [showSynopsis, setShowSynopsis] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState('not-watched')
 
   function onFavoriteClick(e){
@@ -24,12 +25,18 @@ function MovieCard({movie}){
     setShowSaveModal(true)
   }
 
+  function onSynopsisClick(e){
+    e.stopPropagation()
+    setShowSynopsis(true)
+  }
+
   const handleConfirmSave = () => {
     const newWatchlistItem = {
       movieId: movie.id,
       title: movie.title,
       posterPath: movie.poster_path,
       vote_average: movie.vote_average,
+      overview: movie.overview || '',
       genre_ids: movie.genre_ids || [],
       status: selectedStatus,
       savedAt: new Date().toISOString(),
@@ -52,6 +59,7 @@ function MovieCard({movie}){
     setSelectedStatus('not-watched')
   }
 
+
   return (
     <>
       <div className="movie-card">
@@ -60,6 +68,7 @@ function MovieCard({movie}){
         </div>
         <div className="movie-overlay">
           <button className="save-btn" onClick={onSaveClick} title="Save to watchlist">📌 Save for Later</button>
+          <button className="synopsis-btn" onClick={onSynopsisClick} title="Synopsis">📝 Synopsis</button>
           <div className="overlay-buttons">
             <button className="favorite-btn" onClick={onFavoriteClick} title="Add to favorites">{favorite ? '❤️' : '🤍'}</button>
           </div>
@@ -134,6 +143,28 @@ function MovieCard({movie}){
               >
                 💾 Save to Watchlist
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showSynopsis && (
+        <div className='modal-overlay-card' onClick={() => setShowSynopsis(false)}>
+          <div className='modal-content-card' onClick={(e) => e.stopPropagation()}>
+            <div className='modal-header-card'>
+              <h2>Synopsis</h2>
+              <button className='modal-close-card' onClick={() => setShowSynopsis(false)}>✕</button>
+            </div>
+            <div className='modal-body-card'>
+              <div className='movie-preview-card'>
+                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} onError={(e) => e.target.src = 'https://via.placeholder.com/200x300?text=No+Image'} />
+                <h3>{movie.title}</h3>
+              </div>
+              <div style={{padding: '0 1rem 1.5rem'}}>
+                <p style={{color: '#ddd', lineHeight: 1.5}}>{movie.overview || 'No synopsis available.'}</p>
+              </div>
+            </div>
+            <div className='modal-footer-card'>
+              <button className='btn-cancel-card' onClick={() => setShowSynopsis(false)}>Close</button>
             </div>
           </div>
         </div>

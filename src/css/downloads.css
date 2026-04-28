@@ -98,6 +98,21 @@
   color: white;
 }
 
+.synopsis-btn-small {
+  margin-right: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.synopsis-btn-small:hover {
+  background: rgba(233,69,96,0.12);
+  border-color: #e94560;
+}
+
 .movie-rating-small {
   color: gold;
   font-weight: 600;

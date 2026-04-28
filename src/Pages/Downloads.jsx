@@ -8,6 +8,7 @@ function Watchlist({ selectedGenre }) {
   const [watchlist, setWatchlist] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedStatus, setSelectedStatus] = useState('all')
+  const [synopsisMovie, setSynopsisMovie] = useState(null)
   const navigate = useNavigate()
 
   const filteredWatchlist = useMemo(() => {
@@ -182,6 +183,13 @@ function Watchlist({ selectedGenre }) {
                       <option value='completed'>✅ Completed</option>
                     </select>
                     <button
+                      className='synopsis-btn-small'
+                      onClick={() => setSynopsisMovie(movie)}
+                      title='Synopsis'
+                    >
+                      📝
+                    </button>
+                    <button
                       className='delete-btn'
                       onClick={() => handleDelete(movie.movieId)}
                       title='Remove from watchlist'
@@ -193,6 +201,28 @@ function Watchlist({ selectedGenre }) {
               </div>
             ))}
           </div>
+          {synopsisMovie && (
+            <div className='modal-overlay-card' onClick={() => setSynopsisMovie(null)}>
+              <div className='modal-content-card' onClick={(e) => e.stopPropagation()}>
+                <div className='modal-header-card'>
+                  <h2>Synopsis</h2>
+                  <button className='modal-close-card' onClick={() => setSynopsisMovie(null)}>✕</button>
+                </div>
+                <div className='modal-body-card'>
+                  <div className='movie-preview-card'>
+                    <img src={`https://image.tmdb.org/t/p/w200${synopsisMovie.posterPath}`} alt={synopsisMovie.title} onError={(e) => e.target.src = 'https://via.placeholder.com/200x300?text=No+Image'} />
+                    <h3>{synopsisMovie.title}</h3>
+                  </div>
+                  <div style={{padding: '0 1rem 1.5rem'}}>
+                    <p style={{color: '#ddd', lineHeight: 1.5}}>{synopsisMovie.overview || 'No synopsis available.'}</p>
+                  </div>
+                </div>
+                <div className='modal-footer-card'>
+                  <button className='btn-cancel-card' onClick={() => setSynopsisMovie(null)}>Close</button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className='downloads-empty'>
